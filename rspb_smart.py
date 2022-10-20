@@ -7,27 +7,28 @@ import pandas
 def read_yaml():
     with open('config.yaml') as config:
         return yaml.load(config, Loader=yaml.FullLoader)
-    
+
 def convert_xl_to_json(file_name):
     excel_data_df = pandas.read_excel(file_name)
     json_str = excel_data_df.to_json(orient='records')
     print('Excel Sheet to JSON:\n', json_str)
 
-    
+
 def parse_yaml(config_data):
     schema_table_dictionary = {}
 
     for mapper in config_data.get("rspbMapSmart"):
         for element, value in mapper.items():
-            
-             if "excelcolumn" in value:
+
+            if "excelcolumn" in value:
                 key = "excel"
                 data_map_dictionary = {"column": value.get("excelcolumn"), "category": value.get("category"),
-                                       "attribute": value.get("attribute"), "type": value.get("type")}
+                                   "attribute": value.get("attribute"), "type": value.get("type")}
             else:
                 key = value.get("schema") + "." + value.get("table")
                 data_map_dictionary = {"column": value.get("column"), "category": value.get("category"),
                                    "attribute": value.get("attribute"), "type": value.get("type")}
+
             if key not in schema_table_dictionary:
                 schema_table_dictionary[key] = []
 
@@ -153,6 +154,7 @@ def save_xml(xml_str):
 
 if __name__ == "__main__":
     config_data = read_yaml()
+    convert_xl_to_json(config_data.get("excelFilePath"))
     schema_table_dictionary = parse_yaml(config_data)
     select_queries = create_select_queries(schema_table_dictionary)
     #for query in select_queries:

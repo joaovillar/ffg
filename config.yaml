@@ -1,3 +1,4 @@
+excelFilePath: C:\Users\Villar\Desktop\ffg\test.xlsx
 rspbMapSmart:
   - map:
       schema: dbo
@@ -47,4 +48,9 @@ rspbMapSmart:
       column: name
       category: cat3
       attribute: at7
+      type: TEXT
+  - map:
+      excelcolumn: animalName
+      category: cat4
+      attribute: at8
       type: TEXT
